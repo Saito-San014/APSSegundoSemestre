@@ -5,16 +5,10 @@ import rsa
 
 from tkinter import *
 from tkinter import ttk
-#Instacia o Tkinter
-root = Tk()
-#Define um titulo para a janela do Tkinter
-root.title("APS - Criptografia")
 
-frm = ttk.Frame(root, padding=50)
-frm.grid()
 def encryptRSA(text):
     #Cria as chaves publicas e privadas
-    publicKey, privateKey = rsa.newkeys(128)
+    publicKey, privateKey = rsa.newkeys(512)
     #Texto sendo criptografado com a chave publica
     encodeText = rsa.encrypt(text.encode(), publicKey)          
     #Desncripta o texto
@@ -30,23 +24,65 @@ def encrypt():
     entry = entryText.get()
     print(entry)
     results = encryptRSA(entry)
-    labelPublicKey = Label(root, text=str(results[0])).grid(column=1,row=2)
-    labelPrivateKey = Label(root, text=str(results[1])).grid(column=1,row=3)
-    labelEncodeText = Label(root, text=str(results[2])).grid(column=1,row=4)
-    labelDecodeText = Label(root, text=str(results[3])).grid(column=1,row=5)
+    labelPublicKey.configure(text=str(results[0]))
+    labelPrivateKey.configure(text=str(results[1]))
+    labelEncodeText.configure(text=str(results[2]))
+    labelDecodeText.configure(text=str(results[3]))
+#Instacia o Tkinter
+root = Tk()
+#Define um titulo para a janela do Tkinter
+root.title("APS - Criptografia")
+#Define o tamanho da janela
+root.geometry('1980x1080')
+root.state('zoomed')
+s = ttk.Style()
+s.configure('My.TFrame', background='red')
+frameEntry = ttk.Frame(root, style='My.TFrame',padding=30,width=600)
+frameEntry.pack(side=TOP, padx=20)
+
+
+frm = ttk.Frame(root)
+frm.pack(side=TOP,padx=20)
+
+frm.columnconfigure(1, weight=1)
 #Cria o label e o posiciona no grid 
-labelEntry = Label(root, text= "Digite o texto que sera criptografado").grid(column=0,row=0)
-entryText = Entry(root, width=30)
-entryText.grid(column=1,row=0)
-botao = Button(root, text="Clica aqui",command = encrypt)
-botao.grid(column=2, row=0, padx=5, pady=15)
+labelEntry = Label(frameEntry, text= "Digite o texto que sera criptografado")
+labelEntry.grid(column=0,row=0, padx=10, ipadx=20)
+#Cria o input de entrada para o usuairo digitar
+entryText = Entry(frameEntry, width=30)
+#Posiciona no grid
+#PS. não pode ser como no label, pois quando for utilizar get() ira return null
+entryText.grid(column=1,row=0,padx=10)
+#Cria  a instacia do botão e define o onClick na função encrypt
+botao = Button(frameEntry, text="Clica aqui",command = encrypt)
+#define aonde o botão vai ficar no grid
+botao.grid(column=2, row=0,ipadx=20,padx=20) 
+#Labels para exibir informações
+labelTextPublicKey = Label(frm, text= "Chave publica",background='cyan', font=("Arial", 16),borderwidth=2, relief="groove", anchor="center")
+labelTextPublicKey.grid(row = 0, column = 0, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
 
-labelTextPublicKey = Label(root, text= "Chave publica").grid(column=0, row=2)
-labelTextPrivateKey = Label(root, text= "Chave privada").grid(column=0, row=3)
-labelTextEncodeText = Label(root, text= "Texto Criptogafado").grid(column=0, row=4)
-labelTextDecodeText = Label(root, text= "Texto original").grid(column=0, row=5)
+labelTextPrivateKey = Label(frm, text= "Chave privada",background='cyan', font=("Arial", 16),borderwidth=2, relief="groove", anchor="center")
+labelTextPrivateKey.grid(row = 1, column = 0, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
 
+labelTextEncodeText = Label(frm, text= "Texto Criptogafado",background='cyan', font=("Arial", 16),borderwidth=2, relief="groove", anchor="center")
+labelTextEncodeText.grid(row = 2, column = 0, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
 
+labelTextDecodeText = Label(frm, text= "Texto original",background='cyan', font=("Arial", 16),borderwidth=2, relief="groove", anchor="center")
+labelTextDecodeText.grid(row = 3, column = 0, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
 
+fontSize = 16
+wrapLength = 800
+
+labelPublicKey = Label(frm, wraplength=wrapLength,text="", background="green", font=("Arial", fontSize),borderwidth=2,height=5,width=900, relief="groove")
+labelPublicKey.grid(row = 0, column = 1, padx = 5, pady = 5, ipadx = 20, ipady = 20, rowspan = 1, columnspan = 1, sticky = 'NSEW')
+
+labelPrivateKey = Label(frm, wraplength=wrapLength,text="", background="green", font=("Arial", fontSize),borderwidth=2,height=10,width=20, relief="groove", anchor="center")
+labelPrivateKey.grid(row = 1, column = 1, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
+
+labelEncodeText = Label(frm, wraplength=wrapLength,text="", background="green", font=("Arial", fontSize),borderwidth=2,height=5,width=20, relief="groove", anchor="center")
+labelEncodeText.grid(row = 2, column = 1, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
+
+labelDecodeText = Label(frm, wraplength=wrapLength,text="", background="green", font=("Arial",fontSize),borderwidth=2,height=5,width=20, relief="groove",)
+labelDecodeText.grid(row = 3, column = 1, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
 
 root.mainloop()
