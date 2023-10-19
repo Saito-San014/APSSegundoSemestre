@@ -80,7 +80,7 @@ class FrameRSA(Frame):
 
         self.textFrameDecode = Frame(self, borderwidth=1, relief=tk.SOLID, background='white')
         self.textFrameDecode.grid(row=0, column=1, padx = 5, pady = 5, ipadx = 0, ipady = 0, rowspan = 1, columnspan = 1, sticky = 'NSEW')
-        self.textBoxDecode = Text(self.textFrameDecode, height=10, width=100,borderwidth=0,relief=tk.FLAT)
+        self.textBoxDecode = Text(self.textFrameDecode, height=3, width=100,borderwidth=0,relief=tk.FLAT)
         self.textBoxDecode.pack(expand=True, fill=X,padx=10,pady=5)
         
         self.textBoxDecode.bind("<Button-1>", on_click)

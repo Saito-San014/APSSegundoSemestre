@@ -33,7 +33,10 @@ class FrameAES(Frame):
                         select_widget(widget)
                         set_text(widget, conteudo)
                         if widget == self.textBoxPublicKey:
-                            cAES.setKey(conteudo.encode('utf-8'))
+                            if len(conteudo) == 32:
+                                cAES.setKey(conteudo.encode('utf-8'))
+                            else:
+                                messagebox.showinfo("Falha ao carregar a chave", "Chave com tamanho incorreto")
                 except FileNotFoundError:            
                     print("O arquivo não foi encontrado.")
                 except Exception as e:
