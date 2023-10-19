@@ -1,7 +1,7 @@
 import rsa
 from cryptography.fernet import Fernet
 import binascii
-
+from rsa.pkcs1 import DecryptionError
 def encryptAES(text):
     #Cria a chave
     key = Fernet.generate_key()
@@ -37,17 +37,32 @@ class cipherRSA():
     def setPrivateKey(self, privateKeyPEM):
         try:
             self.privateKey = rsa.PrivateKey.load_pkcs1(privateKeyPEM.encode('utf-8'))
-            self.publicKey = self.privateKey.publickey()
+            self.publicKey = rsa.PublicKey(self.privateKey.n, self.privateKey.e)
+            return None
         except ValueError:
             return ValueError
         except Exception as e:
             return e
-        return None
+    def setPublicKey(self, publicKeyPEM):
+        try:
+            self.publicKey = rsa.PublicKey.load_pkcs1(publicKeyPEM.encode('utf-8'))
+            return None
+        except ValueError:
+            return ValueError
+        except Exception as e:
+            return e
     def encrypt(self, text):
+        print(str(self.publicKey))
         return rsa.encrypt(text.encode('utf-8'), self.publicKey)
     def decrypt(self, encodeText):
-        print(self.getPrivateKey())
-        return rsa.decrypt(encodeText, self.privateKey).decode('utf-8')
+        print(encodeText)
+        try:
+            decode = rsa.decrypt(encodeText, self.privateKey).decode('utf-8')
+            return decode
+        except DecryptionError:
+            return None
+        except Exception as e:
+            return e
     
 crsa = cipherRSA()
 encode = crsa.encrypt("Teste")

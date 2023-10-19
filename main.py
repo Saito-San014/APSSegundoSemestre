@@ -1,3 +1,13 @@
+from config import config
+try:
+    import rsa
+    import cryptography
+    print("As bibliotecas estao ok!")
+except ImportError as e :
+    print(e)
+    print(str(e)[16:].replace("'", "")," install start")
+    config(str(e)[16:].replace("'", ""))
+
 print("APS Hello World!")#aoba
 #pip install rsa
 #pip install cryptography
@@ -16,7 +26,7 @@ from newframeRSA import FrameRSA
 from tkinter import *
 from tkinter import ttk
 
-cRSA = cipherRSA()
+
 
 cryptType = "RSA"
 
@@ -40,7 +50,7 @@ class MainW(Tk):
             results = 0 
             if cryptType == "RSA":
                 
-                self.frameRSA.encrypt_decrypt(cRSA)
+                self.frameRSA.encrypt_decrypt()
             elif cryptType == "AES":
                 print("aes")
                 results = encryptAES(entry)
