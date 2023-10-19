@@ -8,25 +8,14 @@ except ImportError as e :
     print(str(e)[16:].replace("'", "")," install start")
     config(str(e)[16:].replace("'", ""))
 
-print("APS Hello World!")#aoba
-#pip install rsa
-#pip install cryptography
-#Precisa excutar os comandos acima no terminal para o codigo funcionar
-#Os comandos acima são para baixar as bibliotecas RSA e Cryptography(AES)
-
 from frameAES import FrameAES
-from frameBoth import FrameBoth
-#from frameRSA import FrameRSA
-#from frameEntry import FrameEntry
-from newframeEntry import FrameEntry
+from frameEntry import FrameEntry
 from cryptograms import *
-from newframeRSA import FrameRSA
+from frameRSA import FrameRSA
 
 
 from tkinter import *
 from tkinter import ttk
-
-
 
 cryptType = "RSA"
 
@@ -46,20 +35,10 @@ class MainW(Tk):
         #Metodo executado ao clicar no botão enviar
         def encrypt():
             global cryptType
-            entry = "Teste"
-            results = 0 
             if cryptType == "RSA":
-                
                 self.frameRSA.encrypt_decrypt()
             elif cryptType == "AES":
-                print("aes")
-                results = encryptAES(entry)
-                self.frameAES.setLabels(results)
-            elif cryptType == "AES RSA":
-                print("both")
-                results = encryptAES(entry)
-                self.frameBoth.setLabels(results)
-                pass
+                self.frameAES.encrypt_decrypt()
         def selectCipher(event):
             global cryptType
             opcao = self.frameEntry.combo.get()
@@ -69,8 +48,6 @@ class MainW(Tk):
                     cryptType = opcao
                 case "AES":
                     cryptType = opcao
-                case "AES RSA":
-                    cryptType = opcao
                 case _:
                     pass
             updateState(self)
@@ -78,27 +55,18 @@ class MainW(Tk):
         def updateState(self):
             global cryptType
             if(cryptType == "RSA"):
-                self.frameRSA.pack(side=TOP,padx=20,pady=20)
+                self.frameRSA.pack(side=TOP, padx=20, pady=20, before=self.frameEntry)
                 self.frameAES.pack_forget()
-                self.frameBoth.pack_forget()
             elif(cryptType == "AES"):
-                self.frameAES.pack(side=TOP,padx=20)
+                self.frameAES.pack(side=TOP, padx=20, pady=20, before=self.frameEntry)
                 self.frameRSA.pack_forget()
-                self.frameBoth.pack_forget()
-            elif(cryptType == "AES RSA"):
-                self.frameBoth.pack(side=TOP,padx=20)
-                self.frameRSA.pack_forget()
-                self.frameAES.pack_forget()
-            self.frameEntry.pack(side=BOTTOM, pady=30)
-
 
         self.frameEntry = FrameEntry(self, encrypt,selectCipher, style='My.TFrame')
+        self.frameEntry.pack(side=TOP, pady=0)
         
         self.frameRSA = FrameRSA(self)
         
         self.frameAES = FrameAES(self)
-
-        self.frameBoth = FrameBoth(self)
 
         updateState(self)
         

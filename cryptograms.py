@@ -13,17 +13,26 @@ def encryptAES(text):
     decodeText = cipher.decrypt(encodeText).decode()
     print(cipher)
     return [key, encodeText, decodeText]
-
-
-#Metodo que cripitografa em RSA
-'''def encryptRSA(text):
-    #Cria as chaves publicas e privadas
-    publicKey, privateKey = rsa.newkeys(512)
-    #Texto sendo criptografado com a chave publica
-    encodeText = rsa.encrypt(text.encode(), publicKey)          
-    #Desencripta o texto
-    decodeText = rsa.decrypt(encodeText, privateKey).decode()
-    return [publicKey, privateKey, encodeText, decodeText]'''
+class cipherAES():
+    def __init__(self):
+        self.key = Fernet.generate_key()
+        self.cipher = Fernet(self.key)
+    def getKey(self):
+        return self.key
+    def setKey(self, key):
+        self.key = key
+        self.cipher = Fernet(self.key)
+    def encrypt(self, text):
+        return self.cipher.encrypt(text.encode('utf-8'))
+    def decrypt(self, encodeText):
+        print(cAES.getKey())
+        return self.cipher.decrypt(encodeText).decode('utf-8')
+cAES = cipherAES()
+print(cAES.getKey())
+cAES.setKey("pVPOlWFdwAUQk13nfm43u8J-Qmjci_6XaL5gO8NEnCU=".encode('utf-8'))
+print(cAES.encrypt("testeasdad"))
+print(cAES.decrypt(b'gAAAAABlMMs37qlGFhiqe-7KJMvirvxXoo6KI2zCLHLOe1AVIglvfcWT1v1mFTZBFAI-DKs4Es1Z9cYu1Rdr85OCdet0Rv-wcg=='))
+#Criptografia RSA
 class cipherRSA():
     def __init__(self):
         self.publicKey, self.privateKey = rsa.newkeys(512)
@@ -52,7 +61,6 @@ class cipherRSA():
         except Exception as e:
             return e
     def encrypt(self, text):
-        print(str(self.publicKey))
         return rsa.encrypt(text.encode('utf-8'), self.publicKey)
     def decrypt(self, encodeText):
         print(encodeText)
