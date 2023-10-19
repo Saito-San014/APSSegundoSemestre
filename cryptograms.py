@@ -25,13 +25,8 @@ class cipherAES():
     def encrypt(self, text):
         return self.cipher.encrypt(text.encode('utf-8'))
     def decrypt(self, encodeText):
-        print(cAES.getKey())
         return self.cipher.decrypt(encodeText).decode('utf-8')
-cAES = cipherAES()
-print(cAES.getKey())
-cAES.setKey("pVPOlWFdwAUQk13nfm43u8J-Qmjci_6XaL5gO8NEnCU=".encode('utf-8'))
-print(cAES.encrypt("testeasdad"))
-print(cAES.decrypt(b'gAAAAABlMMs37qlGFhiqe-7KJMvirvxXoo6KI2zCLHLOe1AVIglvfcWT1v1mFTZBFAI-DKs4Es1Z9cYu1Rdr85OCdet0Rv-wcg=='))
+    
 #Criptografia RSA
 class cipherRSA():
     def __init__(self):
@@ -71,14 +66,3 @@ class cipherRSA():
             return None
         except Exception as e:
             return e
-    
-crsa = cipherRSA()
-encode = crsa.encrypt("Teste")
-texto = encode.decode('latin-1')
-decode = texto.encode('latin-1')
-
-
-
-# Representação hexadecimal dos dados criptografados
-hex_data = binascii.hexlify(encode).decode('utf-8')
-bytes_data = binascii.unhexlify(hex_data)

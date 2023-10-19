@@ -1,8 +1,10 @@
 from config import config
+from splashScreen import splashScreen
+splashScreen()
 try:
     import rsa
     import cryptography
-    print("As bibliotecas estao ok!")
+    print("As bibliotecas estão ok!")
 except ImportError as e :
     print(e)
     print(str(e)[16:].replace("'", "")," install start")
@@ -57,9 +59,11 @@ class MainW(Tk):
             if(cryptType == "RSA"):
                 self.frameRSA.pack(side=TOP, padx=20, pady=20, before=self.frameEntry)
                 self.frameAES.pack_forget()
+                self.labelMain.configure(text= "RSA - Rivest-Shamir-Adleman")
             elif(cryptType == "AES"):
                 self.frameAES.pack(side=TOP, padx=20, pady=20, before=self.frameEntry)
                 self.frameRSA.pack_forget()
+                self.labelMain.configure(text= "AES - Advanced Encryption Standard")
 
         self.frameEntry = FrameEntry(self, encrypt,selectCipher, style='My.TFrame')
         self.frameEntry.pack(side=TOP, pady=0)
@@ -67,8 +71,9 @@ class MainW(Tk):
         self.frameRSA = FrameRSA(self)
         
         self.frameAES = FrameAES(self)
-
+        self.labelMain = Label(self, font=("Arial", 24))
         updateState(self)
+        self.labelMain.pack(side=TOP, before=self.frameRSA)
         
 
 if __name__=="__main__":

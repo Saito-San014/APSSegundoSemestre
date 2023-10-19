@@ -104,16 +104,16 @@ class FrameRSA(Frame):
 
         self.textBoxEncode.bind("<Button-1>", on_click)
 
-        self.frameDecodeButtons = Frame(self,width=30, background="black")
+        self.frameDecodeButtons = Frame(self,width=30, background='white')
         self.frameDecodeButtons.grid(row=0,column=2, padx=20)
         
-        self.framePrivateKeyButtons = Frame(self,width=30, background="black")
+        self.framePrivateKeyButtons = Frame(self,width=30, background='white')
         self.framePrivateKeyButtons.grid(row=1,column=2, padx=20)
 
-        self.framePublicKeyButtons = Frame(self,width=30, background="black")
+        self.framePublicKeyButtons = Frame(self,width=30, background='white')
         self.framePublicKeyButtons.grid(row=2,column=2, padx=20)
         
-        self.frameEncodeButtons = Frame(self,width=30, background="black")
+        self.frameEncodeButtons = Frame(self,width=30, background='white')
         self.frameEncodeButtons.grid(row=3,column=2, padx=20)
 
         buttonsSaveOpen(self, open_file_dialog, saveAs, self.frameDecodeButtons, self.textBoxDecode)
